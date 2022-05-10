@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 
-import Navbar from "../components/Navbar";
 import PromoSection from "../components/PromoSection";
+import TrendingProducts from "../components/TrendingProducts";
 
 const Home: NextPage = () => {
   return (
     <>
-      <Navbar />
       <PromoSection />
+      <TrendingProducts />
     </>
   );
 };

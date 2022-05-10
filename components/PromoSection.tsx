@@ -1,7 +1,9 @@
-import { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 
-const PromoSection: NextPage = () => {
+const PromoSection = () => {
+  // add content requested from API (7 images, a title and a description)
+
   const item = (url: string) => {
     return (
       <div className="w-full h-full object-center object-cover relative">
@@ -25,7 +27,7 @@ const PromoSection: NextPage = () => {
           </div>
           <div>
             <div className="mt-10">
-              {/* Decorative image grid */}
+              {/* Decorative image grid (up to 7 items) */}
               <div
                 aria-hidden="true"
                 className="pointer-events-none lg:absolute lg:inset-y-0 lg:max-w-7xl lg:mx-auto lg:w-full"
@@ -77,12 +79,11 @@ const PromoSection: NextPage = () => {
                 </div>
               </div>
 
-              <a
-                href="#"
-                className="inline-block text-center bg-indigo-600 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-indigo-700"
-              >
-                Shop Collection
-              </a>
+              <Link href="/store">
+                <a className="inline-block text-center bg-indigo-600 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-indigo-700">
+                  Shop Collection
+                </a>
+              </Link>
             </div>
           </div>
         </div>
