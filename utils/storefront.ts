@@ -3,7 +3,7 @@ export async function storefront(query: string, variables = {}) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": "3dc2185e8275551600b54b98da2fcdcc",
+      "X-Shopify-Storefront-Access-Token": process.env.NEXT_PUBLIC_ACCESS_TOKEN,
     },
     body: JSON.stringify({ query, variables }),
   });
