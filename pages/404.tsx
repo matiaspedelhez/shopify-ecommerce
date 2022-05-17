@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 
 const error_image = require("/public/assets/404-2.png");
 const decorative_image = require("/public/assets/Group.png");
@@ -8,6 +9,9 @@ const decorative_image = require("/public/assets/Group.png");
 const errorPage: NextPage = () => {
   return (
     <div className="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16 max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+      <Head>
+        <title>{`Blueberry Clothing: Error 404`}</title>
+      </Head>
       <div className="xl:pt-24 w-full xl:w-1/2 relative pb-12 lg:pb-0 ">
         <div className="relative">
           <div>

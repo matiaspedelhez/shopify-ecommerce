@@ -3,10 +3,14 @@ import { storefront } from "../utils/storefront";
 
 import PromoSection from "../components/PromoSection";
 import TrendingProducts from "../components/TrendingProducts";
+import Head from "next/head";
 
 const Home: NextPage = ({ products }) => {
   return (
     <>
+      <Head>
+        <title>{`Blueberry Clothing: Home`}</title>
+      </Head>
       <PromoSection />
       <TrendingProducts trendingProducts={products.edges} />
     </>
