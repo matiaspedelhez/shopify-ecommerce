@@ -5,19 +5,7 @@ import Image from "next/image";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 const ProductOverview = ({ productByHandle }) => {
-  //
-  const [selectedColor, setSelectedColor] = useState({
-    name: "White",
-    class: "bg-white",
-    selectedClass: "ring-gray-400",
-  });
-  const [selectedSize, setSelectedSize] = useState("XXS");
-
   const transformedProduct = {
     name: productByHandle.title,
     price: `$${productByHandle.priceRange.maxVariantPrice.amount}`,
@@ -30,21 +18,14 @@ const ProductOverview = ({ productByHandle }) => {
       .filter((e: { name: string; values: string }) => e.name === "Color")[0]
       .values.map((value: string) => ({
         name: value,
-        class: `bg-${value.toLowerCase()}`,
-        selectedClass: `ring-${value.toLowerCase()}-600`,
+        class: `bg-[${value}]`,
+        selectedClass: `ring-[${value}]`,
+        color: value,
       })),
-    sizes: [
-      { name: "XXS", inStock: false },
-      { name: "XS", inStock: true },
-      { name: "S", inStock: true },
-      { name: "M", inStock: true },
-      { name: "L", inStock: true },
-      { name: "XL", inStock: true },
-      { name: "2XL", inStock: true },
-      { name: "3XL", inStock: true },
-    ],
-    description:
-      'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
+    sizes: productByHandle.options
+      .filter((e: { name: string; values: string }) => e.name === "Size")[0]
+      .values.map((size: string) => ({ name: size, inStock: true })),
+    description: productByHandle.description,
     highlights: [
       "Hand cut and sewn locally",
       "Dyed with our proprietary colors",
@@ -54,7 +35,15 @@ const ProductOverview = ({ productByHandle }) => {
     details:
       'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
   };
-  console.log(transformedProduct);
+
+  const [selectedColor, setSelectedColor] = useState(
+    transformedProduct.colors[0]
+  );
+  const [selectedSize, setSelectedSize] = useState(transformedProduct.sizes[0]);
+
+  function classNames(...classes: Array<String>) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   return (
     <div className="bg-white">
@@ -101,56 +90,76 @@ const ProductOverview = ({ productByHandle }) => {
         {/* Image gallery */}
         <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
           <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block max-w-sm">
-            <div className="w-full h-96 relative">
+            <div
+              className="w-full h-96 relative"
+              style={{ backgroundColor: "#e2e2e2" }}
+            >
               <Image
                 src={transformedProduct.images[0].url}
                 alt={transformedProduct.images[0].altText}
                 layout="fill"
-                width={transformedProduct.images[0].width}
-                height={transformedProduct.images[0].height}
                 objectFit="cover"
                 objectPosition="center"
+                quality={60}
+                className="duration-200"
+                placeholder="blur"
+                blurDataURL={transformedProduct.images[0].transformedSrc}
               />
             </div>
           </div>
           <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
             <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-              <div className=" w-full h-full relative">
+              <div
+                className=" w-full h-full relative"
+                style={{ backgroundColor: "#e2e2e2" }}
+              >
                 <Image
                   src={transformedProduct.images[1].url}
                   alt={transformedProduct.images[1].altText}
                   layout="fill"
-                  width={transformedProduct.images[1].width}
-                  height={transformedProduct.images[1].height}
                   objectFit="cover"
                   objectPosition="center"
+                  quality={60}
+                  className="duration-200"
+                  placeholder="blur"
+                  blurDataURL={transformedProduct.images[1].transformedSrc}
                 />
               </div>
             </div>
             <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden max-w-sm">
-              <div className="w-full h-full relative">
+              <div
+                className="w-full h-full relative"
+                style={{ backgroundColor: "#e2e2e2" }}
+              >
                 <Image
                   src={transformedProduct.images[2].url}
                   alt={transformedProduct.images[2].altText}
                   layout="fill"
-                  width={transformedProduct.images[2].width}
-                  height={transformedProduct.images[2].height}
                   objectFit="cover"
                   objectPosition="center"
+                  quality={60}
+                  className="duration-200"
+                  placeholder="blur"
+                  blurDataURL={transformedProduct.images[2].transformedSrc}
                 />
               </div>
             </div>
           </div>
           <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
-            <div className="w-full h-96 relative">
+            <div
+              className="w-full h-96 relative"
+              style={{ backgroundColor: "#e2e2e2" }}
+            >
               <Image
                 src={transformedProduct.images[3].url}
                 alt={transformedProduct.images[3].altText}
                 layout="fill"
-                width={transformedProduct.images[3].width}
-                height={transformedProduct.images[3].height}
                 objectFit="cover"
                 objectPosition="center"
+                quality={60}
+                className="duration-200"
+                placeholder="blur"
+                blurDataURL={transformedProduct.images[3].transformedSrc}
               />
             </div>
           </div>
@@ -204,8 +213,8 @@ const ProductOverview = ({ productByHandle }) => {
 
                 <RadioGroup
                   value={selectedColor}
-                  onChange={setSelectedColor}
                   className="mt-4"
+                  onChange={setSelectedColor}
                 >
                   <RadioGroup.Label className="sr-only">
                     Choose a color
@@ -214,15 +223,15 @@ const ProductOverview = ({ productByHandle }) => {
                     {transformedProduct.colors.map((color) => (
                       <RadioGroup.Option
                         key={color.name}
-                        value={color}
-                        className={({ active, checked }) =>
-                          classNames(
-                            color.selectedClass,
-                            active && checked ? "ring ring-offset-1" : "",
-                            !active && checked ? "ring-2" : "",
+                        value={color.name}
+                        style={{ backgroundColor: color.color }}
+                        className={({ active, checked }) => {
+                          return classNames(
+                            checked ? "ring" : "",
+                            active ? "ring ring-offset-1" : "",
                             "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
-                          )
-                        }
+                          );
+                        }}
                       >
                         <RadioGroup.Label as="span" className="sr-only">
                           {color.name}
@@ -264,7 +273,7 @@ const ProductOverview = ({ productByHandle }) => {
                     {transformedProduct.sizes.map((size) => (
                       <RadioGroup.Option
                         key={size.name}
-                        value={size}
+                        value={size.name}
                         disabled={!size.inStock}
                         className={({ active }) =>
                           classNames(
