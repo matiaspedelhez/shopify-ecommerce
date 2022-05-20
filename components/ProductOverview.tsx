@@ -45,6 +45,22 @@ const ProductOverview = ({ productByHandle }) => {
     return classes.filter(Boolean).join(" ");
   }
 
+  function productImage(image: any) {
+    return (
+      <Image
+        src={image.url}
+        alt={image.altText}
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+        quality={60}
+        className="duration-200"
+        placeholder="blur"
+        blurDataURL={image.transformedSrc}
+      />
+    );
+  }
+
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -94,17 +110,8 @@ const ProductOverview = ({ productByHandle }) => {
               className="w-full h-96 relative"
               style={{ backgroundColor: "#e2e2e2" }}
             >
-              <Image
-                src={transformedProduct.images[0].url}
-                alt={transformedProduct.images[0].altText}
-                layout="fill"
-                objectFit="cover"
-                objectPosition="center"
-                quality={60}
-                className="duration-200"
-                placeholder="blur"
-                blurDataURL={transformedProduct.images[0].transformedSrc}
-              />
+              {/* image here */}
+              {productImage(transformedProduct.images[0])}
             </div>
           </div>
           <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
@@ -113,17 +120,8 @@ const ProductOverview = ({ productByHandle }) => {
                 className=" w-full h-full relative"
                 style={{ backgroundColor: "#e2e2e2" }}
               >
-                <Image
-                  src={transformedProduct.images[1].url}
-                  alt={transformedProduct.images[1].altText}
-                  layout="fill"
-                  objectFit="cover"
-                  objectPosition="center"
-                  quality={60}
-                  className="duration-200"
-                  placeholder="blur"
-                  blurDataURL={transformedProduct.images[1].transformedSrc}
-                />
+                {/* image here */}
+                {productImage(transformedProduct.images[1])}
               </div>
             </div>
             <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden max-w-sm">
@@ -131,17 +129,8 @@ const ProductOverview = ({ productByHandle }) => {
                 className="w-full h-full relative"
                 style={{ backgroundColor: "#e2e2e2" }}
               >
-                <Image
-                  src={transformedProduct.images[2].url}
-                  alt={transformedProduct.images[2].altText}
-                  layout="fill"
-                  objectFit="cover"
-                  objectPosition="center"
-                  quality={60}
-                  className="duration-200"
-                  placeholder="blur"
-                  blurDataURL={transformedProduct.images[2].transformedSrc}
-                />
+                {/* image here */}
+                {productImage(transformedProduct.images[2])}
               </div>
             </div>
           </div>
@@ -150,17 +139,8 @@ const ProductOverview = ({ productByHandle }) => {
               className="w-full h-96 relative"
               style={{ backgroundColor: "#e2e2e2" }}
             >
-              <Image
-                src={transformedProduct.images[3].url}
-                alt={transformedProduct.images[3].altText}
-                layout="fill"
-                objectFit="cover"
-                objectPosition="center"
-                quality={60}
-                className="duration-200"
-                placeholder="blur"
-                blurDataURL={transformedProduct.images[3].transformedSrc}
-              />
+              {/* image here */}
+              {productImage(transformedProduct.images[3])}
             </div>
           </div>
         </div>

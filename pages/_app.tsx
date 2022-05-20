@@ -1,5 +1,5 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import "../styles/globals.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return pageLoading ? (
     <LoadingScreen />
   ) : (
-    <div className="duration-200">
+    <div className="animate-emerge">
       <Navbar />
       <Component {...pageProps} />
       <Footer />

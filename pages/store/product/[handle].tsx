@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import { storefront } from "../../../utils/storefront";
 import ProductOverview from "../../../components/ProductOverview";
 import Head from "next/head";
-//
 
 const ProductByHandle: NextPage = ({ productByHandle }) => {
   return (

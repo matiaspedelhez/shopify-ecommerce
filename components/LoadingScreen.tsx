@@ -1,6 +1,6 @@
 const LoadingScreen = () => {
   return (
-    <div className="h-screen w-screen flex justify-center items-center opacity-100 duration-1000">
+    <div className="h-screen w-screen flex justify-center items-center animate-emerge">
       <svg
         width="200"
         height="200"
