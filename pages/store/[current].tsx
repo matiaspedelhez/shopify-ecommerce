@@ -1,23 +1,18 @@
 import next, { NextPage } from "next";
-import { useRouter } from "next/router";
 import { storefront } from "../../utils/storefront";
 import PaginationButtons from "../../components/PaginationButtons";
 
 import ProductList from "../../components/ProductList";
-const totalDisplayed = 4;
+const totalDisplayed = 12;
 
-const Store: NextPage = ({ totalCount }) => {
-  const router = useRouter();
-
-  let current: string | undefined = router.query.current;
-
+const Store: NextPage = ({ totalProducts, products, selectedPage }) => {
   return (
     <div>
-      <ProductList />
+      <ProductList products={products} />
       <PaginationButtons
-        selectedPage={current}
+        selectedPage={selectedPage}
         totalDisplayed={totalDisplayed}
-        totalCount={totalCount}
+        totalProducts={totalProducts}
       />
     </div>
   );
@@ -35,11 +30,33 @@ const getAllCursors = gql`
   }
 `;
 
-const getProductsByCursor = gql`
+const getProductsByCursor = (cursor: string): string => {
+  return gql`
   query getProductsByCursor {
-    products(first: 12, after: "**CURSOR**")
+    products(first: 12, ${cursor === "" ? "" : ', after: "' + cursor + '"'}){
+      edges {
+        node {
+          id
+          handle
+          title
+          priceRange {
+            minVariantPrice {
+              amount
+            }
+          }
+          images(first: 1) {
+            nodes {
+              altText
+              src
+              transformedSrc(maxWidth: 100, maxHeight: 100)
+            }
+          }
+        }
+      }
+    }
   }
 `;
+};
 
 export async function getStaticPaths() {
   try {
@@ -68,12 +85,23 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const totalCountData = await storefront(getAllCursors);
-  const totalCount = await totalCountData.data.products.edges.length;
-
   try {
+    const allCursors = await storefront(getAllCursors);
+    const totalProducts = await allCursors.data.products.edges.length;
+    const selectedPage = await params.current;
+
+    const getProducts =
+      selectedPage == 1
+        ? await storefront(getProductsByCursor(""))
+        : await storefront(
+            getProductsByCursor(
+              allCursors.data.products.edges[selectedPage * totalDisplayed]
+            )
+          );
+    const products = getProducts.data.products.edges;
+
     return {
-      props: { totalCount },
+      props: { totalProducts, selectedPage, products },
     };
   } catch (error) {
     console.log(error);

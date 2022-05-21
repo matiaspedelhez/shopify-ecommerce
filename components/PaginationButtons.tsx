@@ -2,9 +2,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 
-const PaginationButtons = ({ totalCount, selectedPage, totalDisplayed }) => {
+const PaginationButtons = ({ totalProducts, selectedPage, totalDisplayed }) => {
   const router = useRouter();
-  console.log(totalCount);
 
   const singleButton = (content: number) => {
     return Number.isNaN(content) ? (
@@ -28,11 +27,11 @@ const PaginationButtons = ({ totalCount, selectedPage, totalDisplayed }) => {
 
   const renderButtons = () => {
     // render buttons on their correct position
-    const pageQuantity: number = Math.ceil(totalCount / totalDisplayed);
+    const pageQuantity: number = Math.ceil(totalProducts / totalDisplayed);
     let pages: number[] = new Array();
 
-    if (totalCount < totalDisplayed * 5) {
-      for (let i = 1; pages.length < totalCount / totalDisplayed; i++) {
+    if (totalProducts < totalDisplayed * 5) {
+      for (let i = 1; pages.length < totalProducts / totalDisplayed; i++) {
         pages.push(i);
       }
     } else {
@@ -75,7 +74,7 @@ const PaginationButtons = ({ totalCount, selectedPage, totalDisplayed }) => {
           <p className="text-sm text-gray-700">
             Showing <span className="font-medium">{}</span> to{" "}
             <span className="font-medium"></span> of{" "}
-            <span className="font-medium">{totalCount}</span> results
+            <span className="font-medium">{totalProducts}</span> results
           </p>
         </div>
         <div>

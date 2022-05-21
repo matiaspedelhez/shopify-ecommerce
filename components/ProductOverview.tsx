@@ -110,7 +110,6 @@ const ProductOverview = ({ productByHandle }) => {
               className="w-full h-96 relative"
               style={{ backgroundColor: "#e2e2e2" }}
             >
-              {/* image here */}
               {productImage(transformedProduct.images[0])}
             </div>
           </div>
@@ -120,7 +119,6 @@ const ProductOverview = ({ productByHandle }) => {
                 className=" w-full h-full relative"
                 style={{ backgroundColor: "#e2e2e2" }}
               >
-                {/* image here */}
                 {productImage(transformedProduct.images[1])}
               </div>
             </div>
@@ -129,7 +127,6 @@ const ProductOverview = ({ productByHandle }) => {
                 className="w-full h-full relative"
                 style={{ backgroundColor: "#e2e2e2" }}
               >
-                {/* image here */}
                 {productImage(transformedProduct.images[2])}
               </div>
             </div>
@@ -139,7 +136,6 @@ const ProductOverview = ({ productByHandle }) => {
               className="w-full h-96 relative"
               style={{ backgroundColor: "#e2e2e2" }}
             >
-              {/* image here */}
               {productImage(transformedProduct.images[3])}
             </div>
           </div>
