@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
-import { storefront } from "../../../utils/storefront";
-import ProductOverview from "../../../components/ProductOverview";
-import Head from "next/head";
+import type { NextPage } from 'next';
+import { storefront } from '../../../utils/storefront';
+import ProductOverview from '../../../components/ProductOverview';
+import Head from 'next/head';
 
 const ProductByHandle: NextPage = ({ productByHandle }) => {
   return (
@@ -30,6 +30,7 @@ const productByHandle = (handle: string) => gql`
   {
     productByHandle(handle: "${handle}") {
       id
+      handle
       description
       images(first: 4) {
         nodes {

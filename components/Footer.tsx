@@ -27,6 +27,11 @@ function Footer() {
                 </svg>
                 <p className="ml-3 font-bold text-xl">Blueberry Clothing</p>
               </div>
+              <p className="pt-5">
+                All items listed in this website are FAKE and SHOULD NOT be
+                bought. <br />
+                Cart button is only displayed for demonstration purposes.
+              </p>
             </div>
             <div className="w-11/12 xl:w-1/6 lg:w-2/5 mx-auto lg:mx-0 xl:mx-0 pt-3 xl:flex xl:justify-end pl-3 sm:pl-0">
               <ul>
@@ -98,7 +103,7 @@ function Footer() {
           <div className="xl:flex flex-wrap justify-between xl:mt-24 mt-16 pb-6 pl-3 sm:pl-0">
             <div className="w-11/12 xl:w-2/6 mx-auto lg:mx-0 xl:mx-0 mb-6 xl:mb-0">
               <p className="text-gray-800 text-base">
-                This is a prototype made by Matias Pedelhez @ 2022
+                Prototype made by Matias Pedelhez @ 2022
               </p>
             </div>
             <div className="w-11/12 xl:w-2/6 mx-auto lg:mx-0 xl:mx-0 mb-6 lg:mb-0 xl:mb-0">
