@@ -255,7 +255,7 @@ const ProductOverview: React.FunctionComponent<ProductOverviewProps> = ({
                     Choose a color
                   </RadioGroup.Label>
                   <div className='flex items-center space-x-3'>
-                    {transformedProduct.colors.map((color) => (
+                    {transformedProduct.colors.map((color: any) => (
                       <RadioGroup.Option
                         key={color.name}
                         value={color.name}
@@ -305,7 +305,7 @@ const ProductOverview: React.FunctionComponent<ProductOverviewProps> = ({
                     Choose a size
                   </RadioGroup.Label>
                   <div className='grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4'>
-                    {transformedProduct.sizes.map((size) => (
+                    {transformedProduct.sizes.map((size: any) => (
                       <RadioGroup.Option
                         key={size.name}
                         value={size.name}
@@ -376,7 +376,7 @@ const ProductOverview: React.FunctionComponent<ProductOverviewProps> = ({
                       colorName: colorNamer(selectedColor).ntc[0].name,
                       size: selectedSize,
                       handle: transformedProduct.handle,
-                      price: parseInt(
+                      price: Number(
                         transformedProduct.price.match(/[0-9][0-9.]*[0-9]/gi)
                       ),
                       quantity: 1,

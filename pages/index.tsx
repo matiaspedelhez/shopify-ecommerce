@@ -1,11 +1,11 @@
-import type { NextPage } from "next";
-import { storefront } from "../utils/storefront";
+import type { NextPage } from 'next';
+import { storefront } from '../utils/storefront';
 
-import PromoSection from "../components/PromoSection";
-import TrendingProducts from "../components/TrendingProducts";
-import Head from "next/head";
+import PromoSection from '../components/PromoSection';
+import TrendingProducts from '../components/TrendingProducts';
+import Head from 'next/head';
 
-const Home: NextPage = ({ products }) => {
+const Home: NextPage = ({ products }: any) => {
   return (
     <>
       <Head>

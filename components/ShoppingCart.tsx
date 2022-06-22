@@ -18,7 +18,7 @@ interface cartItem {
   quantity: number;
 }
 
-export default function ShoppingCart({ showCart, closeCart }) {
+export default function ShoppingCart({ showCart, closeCart }: any) {
   const { shoppingCart, setShoppingCart } = useSharedCartState();
   const [subTotal, setSubTotal] = useState<number>(0);
 

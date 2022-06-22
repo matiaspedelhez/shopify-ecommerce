@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products }: any) => {
   const router = useRouter();
 
   return (
@@ -10,7 +10,7 @@ const ProductList = ({ products }) => {
         <h2 className='sr-only'>Products</h2>
 
         <div className='grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'>
-          {products.map((product) => (
+          {products.map((product: any) => (
             <a
               key={product.node.id}
               className='group cursor-pointer hover:opacity-75'

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 const colorNamer = require('color-namer');
 
-const TrendingProducts = ({ trendingProducts }) => {
+const TrendingProducts = ({ trendingProducts }: any) => {
   const router = useRouter();
 
   return (

@@ -2,7 +2,11 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 
-const PaginationButtons = ({ totalProducts, selectedPage, totalDisplayed }) => {
+const PaginationButtons = ({
+  totalProducts,
+  selectedPage,
+  totalDisplayed,
+}: any) => {
   const router = useRouter();
 
   const singleButton = (content: number) => {

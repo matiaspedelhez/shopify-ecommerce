@@ -3,7 +3,7 @@ import { storefront } from '../../../utils/storefront';
 import ProductOverview from '../../../components/ProductOverview';
 import Head from 'next/head';
 
-const ProductByHandle: NextPage = ({ productByHandle }) => {
+const ProductByHandle: NextPage = ({ productByHandle }: any) => {
   return (
     <div>
       <Head>
@@ -61,7 +61,7 @@ export async function getStaticPaths() {
   try {
     const { data } = await storefront(allPaths);
 
-    const paths = await data.products.nodes.map(({ handle }) => ({
+    const paths = await data.products.nodes.map(({ handle }: any) => ({
       params: {
         handle: handle,
       },
@@ -76,7 +76,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: any) {
   try {
     const { data } = await storefront(productByHandle(params.handle));
 

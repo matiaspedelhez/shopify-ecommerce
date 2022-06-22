@@ -6,7 +6,7 @@ import ProductList from '../../components/ProductList';
 
 const totalDisplayed = Number(packageInfo.catalog.total_items_to_display);
 
-const Store: NextPage = ({ totalProducts, products, selectedPage }) => {
+const Store: NextPage = ({ totalProducts, products, selectedPage }: any) => {
   return (
     <div>
       <ProductList products={products} />
@@ -87,7 +87,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: any) {
   //not returning an object
 
   try {
