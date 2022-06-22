@@ -20,7 +20,7 @@ const errorPage: NextPage = () => {
           <div className='absolute top-4'>
             <div>
               <h1 className='my-2 text-gray-800 font-bold text-2xl'>
-                Looks like you`&apos;`ve found the doorway to the great nothing
+                Looks like you&apos;ve found the doorway to the great nothing
               </h1>
               <p className='my-2 text-gray-800'>
                 Sorry about that! Please visit our hompage to get where you need
