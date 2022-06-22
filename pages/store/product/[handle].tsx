@@ -67,6 +67,9 @@ export async function getStaticPaths() {
       },
     }));
 
+    console.log(paths);
+    console.log('hola');
+
     return { paths: paths, fallback: false };
   } catch (error) {
     console.log(error);

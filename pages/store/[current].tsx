@@ -1,9 +1,10 @@
-import next, { NextPage } from "next";
-import { storefront } from "../../utils/storefront";
-import PaginationButtons from "../../components/PaginationButtons";
+import next, { NextPage } from 'next';
+import { storefront } from '../../utils/storefront';
+import PaginationButtons from '../../components/PaginationButtons';
+import packageInfo from '../../app_config.json';
+import ProductList from '../../components/ProductList';
 
-import ProductList from "../../components/ProductList";
-const totalDisplayed = 12;
+const totalDisplayed = Number(packageInfo.catalog.total_items_to_display);
 
 const Store: NextPage = ({ totalProducts, products, selectedPage }) => {
   return (
@@ -33,7 +34,9 @@ const getAllCursors = gql`
 const getProductsByCursor = (cursor: string): string => {
   return gql`
   query getProductsByCursor {
-    products(first: 12, ${cursor === "" ? "" : ', after: "' + cursor + '"'}){
+    products(first: ${totalDisplayed}, ${
+    cursor === '' ? '' : 'after: "' + cursor + '"'
+  }){
       edges {
         node {
           id
@@ -85,6 +88,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  //not returning an object
+
   try {
     const allCursors = await storefront(getAllCursors);
     const totalProducts = await allCursors.data.products.edges.length;
@@ -92,12 +97,15 @@ export async function getStaticProps({ params }) {
 
     const getProducts =
       selectedPage == 1
-        ? await storefront(getProductsByCursor(""))
+        ? await storefront(getProductsByCursor(''))
         : await storefront(
             getProductsByCursor(
-              allCursors.data.products.edges[selectedPage * totalDisplayed]
+              allCursors.data.products.edges[
+                (selectedPage - 1) * totalDisplayed - 1
+              ].cursor
             )
           );
+
     const products = getProducts.data.products.edges;
 
     return {

@@ -1,11 +1,56 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
+import Link from 'next/link';
+import { useSharedCartState } from '../pages/_app';
 
-interface ShoppingCartProps {}
+interface cartItem {
+  id: string;
+  title: string;
+  imageSrc: string;
+  handle: string;
+  price: number;
+  colorId: string;
+  colorName: string;
+  size: string;
+  quantity: number;
+}
 
-export default function ShoppingCart({ showCart, closeCart, cartItems }) {
+export default function ShoppingCart({ showCart, closeCart }) {
+  const { shoppingCart, setShoppingCart } = useSharedCartState();
+  const [subTotal, setSubTotal] = useState<number>(0);
+
+  useEffect(() => {
+    const storagedCart: string | null = localStorage.getItem('shopping-cart');
+
+    if (storagedCart !== null) {
+      setShoppingCart(JSON.parse(storagedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    // updates the cart when user removes a item
+    try {
+      localStorage.setItem('shopping-cart', JSON.stringify(shoppingCart));
+    } catch (error) {
+      throw error;
+    }
+    handleSetSubTotal();
+  }, [shoppingCart]);
+
+  const handleRemoveItemFromCart = (itemId: string): void => {
+    const newShoppingCart = shoppingCart.filter((item) => item.id !== itemId);
+    setShoppingCart(newShoppingCart);
+  };
+
+  const handleSetSubTotal = () => {
+    let aux: number = 0;
+    shoppingCart.forEach((e) => (aux = aux + e.price));
+    setSubTotal(aux);
+  };
+
   return (
     <Transition.Root show={showCart} as={Fragment}>
       <Dialog
@@ -65,40 +110,47 @@ export default function ShoppingCart({ showCart, closeCart, cartItems }) {
                             role='list'
                             className='-my-6 divide-y divide-gray-200'
                           >
-                            {/* {products.map((product) => (
-                              <li key={product.id} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <img
+                            {shoppingCart.map((product) => (
+                              <li key={product.id} className='flex py-6'>
+                                <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border bg-gray-200 border-gray-200 relative'>
+                                  <Image
                                     src={product.imageSrc}
-                                    alt={product.imageAlt}
-                                    className="h-full w-full object-cover object-center"
+                                    alt='product image'
+                                    layout='fill'
+                                    quality={2}
+                                    objectFit='contain'
+                                    objectPosition='center'
                                   />
                                 </div>
 
-                                <div className="ml-4 flex flex-1 flex-col">
+                                <div className='ml-4 flex flex-1 flex-col'>
                                   <div>
-                                    <div className="flex justify-between text-base font-medium text-gray-900">
+                                    <div className='flex justify-between text-base font-medium text-gray-900'>
                                       <h3>
-                                        <a href={product.href}>
-                                          {" "}
-                                          {product.name}{" "}
-                                        </a>
+                                        <Link
+                                          href={`/store/product/${product.handle}`}
+                                        >
+                                          <a> {product.title} </a>
+                                        </Link>
                                       </h3>
-                                      <p className="ml-4">{product.price}</p>
+                                      <p className='ml-4'>${product.price}</p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                      {product.color}
+                                    <p className='mt-1 text-sm text-gray-500'>
+                                      {`${product.colorName} - ${product.size}`}
                                     </p>
                                   </div>
-                                  <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">
-                                      Qty {product.quantity}
+                                  <div className='flex flex-1 items-end justify-between text-sm'>
+                                    <p className='text-gray-500'>
+                                      Qty: {product.quantity}
                                     </p>
 
-                                    <div className="flex">
+                                    <div className='flex'>
                                       <button
-                                        type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        type='button'
+                                        className='font-medium text-indigo-600 hover:text-indigo-500'
+                                        onClick={() =>
+                                          handleRemoveItemFromCart(product.id)
+                                        }
                                       >
                                         Remove
                                       </button>
@@ -106,7 +158,7 @@ export default function ShoppingCart({ showCart, closeCart, cartItems }) {
                                   </div>
                                 </div>
                               </li>
-                            ))} */}
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -115,7 +167,7 @@ export default function ShoppingCart({ showCart, closeCart, cartItems }) {
                     <div className='border-t border-gray-200 py-6 px-4 sm:px-6'>
                       <div className='flex justify-between text-base font-medium text-gray-900'>
                         <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <p>{`$${subTotal}`}</p>
                       </div>
                       <p className='mt-0.5 text-sm text-gray-500'>
                         Shipping and taxes calculated at checkout.

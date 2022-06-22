@@ -9,9 +9,21 @@ import Footer from '../components/Footer';
 import LoadingScreen from '../components/LoadingScreen';
 import ShoppingCart from '../components/ShoppingCart';
 
+interface cartItem {
+  id: string;
+  title: string;
+  imageSrc: string;
+  handle: string;
+  price: number;
+  colorId: string;
+  colorName: string;
+  size: string;
+  quantity: number;
+}
+
 const useCartState = () => {
-  const [cartItems, setCartItems] = useState<object[]>([]);
-  return { cartItems, setCartItems };
+  const [shoppingCart, setShoppingCart] = useState<cartItem[]>([]);
+  return { shoppingCart, setShoppingCart };
 };
 export const useSharedCartState = () => useBetween(useCartState);
 
@@ -20,7 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const [pageLoading, setPageLoading] = useState<boolean>(false);
   const [showCart, setShowCart] = useState<boolean>(false);
-  const { cartItems } = useSharedCartState();
+  const { shoppingCart } = useSharedCartState();
 
   useEffect(() => {
     const handleStart = () => {
@@ -39,14 +51,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <LoadingScreen />
   ) : (
     <div className='animate-emerge'>
-      <ShoppingCart
-        closeCart={() => setShowCart(false)}
-        showCart={showCart}
-        cartItems={cartItems}
-      />
+      <ShoppingCart closeCart={() => setShowCart(false)} showCart={showCart} />
       <Navbar
-        cartLength={cartItems.length}
         switchCart={() => setShowCart(!showCart)}
+        cartLength={shoppingCart.length}
       />
       <Component {...pageProps} />
       <Footer />

@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
 import { RadioGroup } from '@headlessui/react';
 import Image from 'next/image';
+import { useSharedCartState } from '../pages/_app';
+
+const colorNamer = require('color-namer');
 
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
 interface cartItem {
   id: string;
   title: string;
+  imageSrc: string;
   handle: string;
-  price: string;
-  color: string;
+  price: number;
+  colorId: string;
+  colorName: string;
   size: string;
-  quantity: number; //have a look at "color-namer" module,
+  quantity: number;
 }
 
 interface ProductOverviewProps {
@@ -59,7 +64,7 @@ const ProductOverview: React.FunctionComponent<ProductOverviewProps> = ({
   const [selectedSize, setSelectedSize] = useState(
     transformedProduct.sizes[0].name
   );
-  const [shoppingCart, setShoppingCart] = useState<cartItem[]>([]);
+  const { shoppingCart, setShoppingCart } = useSharedCartState();
 
   useEffect(() => {
     const storagedCart: string | null = localStorage.getItem('shopping-cart');
@@ -76,7 +81,7 @@ const ProductOverview: React.FunctionComponent<ProductOverviewProps> = ({
         // !@!! ANNOUNCE ADDED TO CART
       } catch (error) {
         throw error;
-        //announce error and remove console log
+        //announce error
       }
     }
   }, [shoppingCart]);
@@ -366,10 +371,14 @@ const ProductOverview: React.FunctionComponent<ProductOverviewProps> = ({
                     {
                       id: `${transformedProduct.handle}?${selectedColor}?${selectedSize}`,
                       title: transformedProduct.name,
-                      color: selectedColor,
+                      imageSrc: transformedProduct.images[0].url,
+                      colorId: selectedColor,
+                      colorName: colorNamer(selectedColor).ntc[0].name,
                       size: selectedSize,
                       handle: transformedProduct.handle,
-                      price: transformedProduct.price,
+                      price: parseInt(
+                        transformedProduct.price.match(/[0-9][0-9.]*[0-9]/gi)
+                      ),
                       quantity: 1,
                     },
                     event
